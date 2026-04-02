@@ -13,6 +13,10 @@ class PlayerService {
         return await this.playerRepository.getById(playerId);
     }
 
+    async getAllPlayers() {
+        return await this.playerRepository.getAll();
+    }
+
     async getPlayerByEmail(email) {
         return await this.playerRepository.getByEmail(email);
     }

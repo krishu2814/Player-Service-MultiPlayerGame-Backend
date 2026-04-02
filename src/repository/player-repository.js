@@ -13,6 +13,10 @@ class PlayerRepository {
         return await Player.findById(playerId);
     }
 
+    async getAll() {
+        return await Player.find();
+    }   
+
     async update(playerId, updateData) {
         return await Player.findByIdAndUpdate(playerId, updateData, { new: true }); // return updated document
     }

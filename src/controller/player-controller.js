@@ -17,7 +17,7 @@ class PlayerController {
             })
         } catch (error) {
             console.error('Error creating player:', error);
-            res.status(500).json({
+            return res.status(500).json({
                 status: 'error',
                 message: 'Internal Server Error',
                 player: {},
@@ -38,7 +38,7 @@ class PlayerController {
                     error: {}
                 });
             }
-            res.json({
+            return res.json({
                 status: 'success',
                 message: 'Player fetched successfully',
                 player: player,
@@ -55,10 +55,31 @@ class PlayerController {
         }
     }
 
+    async getAllPlayers(req, res) {
+        try {
+            const players = await this.playerService.getAllPlayers();
+            return res.json({
+                status: 'success',
+                message: 'Players fetched successfully',
+                player: players,
+                error: {}
+            });
+        } catch (error) {
+            console.error('Error fetching players:', error);
+            return res.status(500).json({
+                status: 'error',
+                message: 'Internal Server Error',
+                player: {},
+                error: error
+            });
+        }
+    }   
+
     async getPlayerByEmail(req, res) {
         try {
             const email = req.query.email;
             const player = await this.playerService.getPlayerByEmail(email);
+            console.log('Fetched player:', player);
             if (!player) {
                 return res.status(404).json({
                     status: 'error',
@@ -67,7 +88,7 @@ class PlayerController {
                     error: {}
                 });
             }
-            res.json({
+            return res.json({
                 status: 'success',
                 message: 'Player fetched successfully',
                 player: player,
@@ -75,7 +96,7 @@ class PlayerController {
             });
         } catch (error) {
             console.error('Error fetching player:', error);
-            res.status(500).json({
+            return res.status(500).json({
                 status: 'error',
                 message: 'Internal Server Error',
                 player: {},
@@ -97,7 +118,7 @@ class PlayerController {
                     error: {}
                 });
             }
-            res.json({
+            return res.json({
                 status: 'success',
                 message: 'Player updated successfully',
                 player: updatedPlayer,
@@ -105,7 +126,7 @@ class PlayerController {
             });
         } catch (error) {
             console.error('Error updating player:', error);
-            res.status(500).json({
+            return res.status(500).json({
                 status: 'error',
                 message: 'Internal Server Error',
                 player: {},
@@ -126,7 +147,7 @@ class PlayerController {
                     error: {}
                 });
             }
-            res.json({
+            return res.json({
                 status: 'success',
                 message: 'Player deleted successfully',
                 player: deletedPlayer,
@@ -134,7 +155,7 @@ class PlayerController {
             });
         } catch (error) {
             console.error('Error deleting player:', error);
-            res.status(500).json({
+            return res.status(500).json({
                 status: 'error',
                 message: 'Internal Server Error',
                 player: {},
