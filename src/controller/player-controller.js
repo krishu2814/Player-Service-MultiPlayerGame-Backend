@@ -5,10 +5,31 @@ class PlayerController {
         this.playerService = new PlayerService();
     }
 
-    async createPlayer(req, res) {
+    async signUp(req, res) {
         try {
             const playerData = req.body;
             const newPlayer = await this.playerService.createPlayer(playerData);
+            return res.status(201).json({
+                status: 'success',
+                message: 'Player created successfully',
+                player: newPlayer,
+                error: {}
+            });
+        } catch (error) {
+            console.error('Error creating player:', error);
+            return res.status(500).json({
+                status: 'error',
+                message: 'Internal Server Error',
+                player: {},
+                error: error
+            });
+        }
+    }
+
+    async createPlayer(req, res) {
+        try {
+            const playerData = req.body;
+            const newPlayer = await this.playerService.signUp(playerData);
             return res.status(201).json({
                 status: 'success',
                 message: 'Player created successfully',
