@@ -50,10 +50,6 @@ class PlayerService {
         return newPlayer;
     }
 
-    // async createPlayer(playerData) {
-    //     return await this.playerRepository.create(playerData);
-    // }
-
     async getPlayerById(playerId) {
         return await this.playerRepository.getById(playerId);
     }

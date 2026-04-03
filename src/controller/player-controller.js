@@ -54,27 +54,7 @@ class PlayerController {
             });
         }
     }
-
-    async createPlayer(req, res) {
-        try {
-            const playerData = req.body;
-            const newPlayer = await this.playerService.signUp(playerData);
-            return res.status(201).json({
-                status: 'success',
-                message: 'Player created successfully',
-                player: newPlayer,
-                error: {}
-            })
-        } catch (error) {
-            console.error('Error creating player:', error);
-            return res.status(500).json({
-                status: 'error',
-                message: 'Internal Server Error',
-                player: {},
-                error: error
-            })
-        }
-    }
+    
 
     async getPlayerById(req, res) {
         try {
