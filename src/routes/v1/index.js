@@ -6,6 +6,7 @@ const PlayerController = require('../../controller/player-controller');
 const playerController = new PlayerController();
 
 router.post('/signup', playerController.createPlayer.bind(playerController));
+router.post('/signin', playerController.signIn.bind(playerController));
 // router.post('/', playerController.createPlayer.bind(playerController));
 // router.get('/email/:email', playerController.getPlayerByEmail.bind(playerController));
 router.get('/:id', playerController.getPlayerById.bind(playerController));

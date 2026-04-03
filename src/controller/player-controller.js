@@ -5,10 +5,39 @@ class PlayerController {
         this.playerService = new PlayerService();
     }
 
+    async signIn(req, res) {
+        try {
+            const { email, password } = req.body;
+            const player = await this.playerService.signIn(email, password);
+            if (!player) {
+                return res.status(401).json({
+                    status: 'error',
+                    message: 'Invalid email or password',
+                    player: {},
+                    error: {}
+                });
+            }
+            return res.json({
+                status: 'success',
+                message: 'Player signed in successfully',
+                player: player,
+                error: {}
+            });
+            
+        } catch (error) {
+            return res.status(500).json({
+                status: 'error',
+                message: 'Internal Server Error',
+                player: {},
+                error: error
+            });
+        }
+    }
+    
     async signUp(req, res) {
         try {
             const playerData = req.body;
-            const newPlayer = await this.playerService.createPlayer(playerData);
+            const newPlayer = await this.playerService.signUp(playerData);
             return res.status(201).json({
                 status: 'success',
                 message: 'Player created successfully',

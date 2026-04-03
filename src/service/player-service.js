@@ -1,10 +1,28 @@
 const PlayerRepository = require('../repository/player-repository');
 const bcrypt = require('bcrypt');
-const { SALT_ROUNDS } = require('../config/serverConfig');
+const { SALT_ROUNDS, SECRET_KEY, EXPIRES_IN } = require('../config/serverConfig');
+const JWT = require('jsonwebtoken');
 
 class PlayerService {
     constructor() {
         this.playerRepository = new PlayerRepository();
+    }
+
+    async signIn(email, password) {
+        const player = await this.playerRepository.getByEmail(email);
+        if (!player) {
+            throw new Error('Player not found');
+        }
+        const isPasswordValid = await bcrypt.compare(password, player.password);
+        if (!isPasswordValid) {
+            throw new Error('Invalid password! Please try again.');
+        }
+        
+        // Create JWT token
+        const token = await this.createToken(player._id, player.email);
+        // console.log('Generated token:', token);
+
+        return { player, token };   
     }
 
     async signUp(playerData) {
@@ -55,6 +73,11 @@ class PlayerService {
     async deletePlayer(playerId) {
         return await this.playerRepository.delete(playerId);
     }
+
+    async createToken(playerId, email) {
+        return JWT.sign({ id: playerId, email: email }, SECRET_KEY, { expiresIn: EXPIRES_IN });
+    }
+
 }
 
 module.exports = PlayerService;
