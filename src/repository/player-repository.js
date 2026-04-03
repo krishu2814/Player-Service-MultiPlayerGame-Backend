@@ -1,6 +1,9 @@
 const Player = require('../model/player-model');
 
 class PlayerRepository {
+    async create(playerData) {
+        return await Player.create(playerData);
+    }
 
     async getByEmail(email) {
         return await Player.findOne({ email });
