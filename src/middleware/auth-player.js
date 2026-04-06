@@ -40,7 +40,7 @@ const isAuthenticUser = (req, res, next) => {
         });
     }
 
-    // Important for other services to know which user is making 
+    // Important for other services to know which user is making
     // the request to get user Id from token and attach to req object
     req.user = decodedToken;
     next(); 
