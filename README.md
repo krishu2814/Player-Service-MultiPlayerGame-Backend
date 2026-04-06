@@ -190,5 +190,5 @@ git push origin feature/YourFeature
 
 **Krishu Kumar**  
 📧 Email: [krishukumarsingh06@gmail.com](mailto:krishukumarsingh06@gmail.com)  
-🐙 GitHub: https://github.com/your-username
+🐙 GitHub: https://github.com/krishu2814
 
